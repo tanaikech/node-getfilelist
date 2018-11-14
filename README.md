@@ -61,7 +61,7 @@ This is a sample script using API key. When you want to retrieve the API key, pl
 
 ### Sample script
 ~~~javascript
-const getfilelist = require("getfilelist");
+const getfilelist = require("google-drive-getfilelist");
 
 const resource = {
     auth: "### API key ###",
@@ -161,7 +161,7 @@ function getAccessToken(oAuth2Client, callback) {
  * Using getfilelist.
  */
 function getfilelist(auth) {
-    const getfilelist = require('getfilelist');
+    const getfilelist = require('google-drive-getfilelist');
 
     const resource = {
         auth: auth,
@@ -190,7 +190,7 @@ Document of Service account is [here](https://developers.google.com/identity/pro
 ### Sample script
 ~~~javascript
 const {google} = require('googleapis');
-const getfilelist = require('getfilelist');
+const getfilelist = require('google-drive-getfilelist');
 const key = require('### json file including public/private key pair ###');
 
 const jwtClient = new google.auth.JWT(
