@@ -1,0 +1,109 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Nodist\\v-x64\\9.4.0\\node.exe',
+1 verbose cli   'C:\\Nodist\\npmv\\3.10.5\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@3.10.5
+3 info using node@v9.4.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: 'D:\\gomi\\GitHub\\node-getfilelist',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory C:\Users\adsam\AppData\Roaming\npm-cache\getfilelist\1.0.0\package.tgz not in flight; packing
+9 verbose correctMkdir C:\Users\adsam\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+10 info lifecycle getfilelist@1.0.0~prepublish: getfilelist@1.0.0
+11 silly lifecycle getfilelist@1.0.0~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ 'C:\\Users\\adsam\\AppData\\Roaming\\npm-cache\\getfilelist\\1.0.0\\package.tgz',
+12 verbose tar pack   'D:\\gomi\\GitHub\\node-getfilelist' ]
+13 verbose tarball C:\Users\adsam\AppData\Roaming\npm-cache\getfilelist\1.0.0\package.tgz
+14 verbose folder D:\gomi\GitHub\node-getfilelist
+15 verbose addLocalTarball adding from inside cache C:\Users\adsam\AppData\Roaming\npm-cache\getfilelist\1.0.0\package.tgz
+16 verbose correctMkdir C:\Users\adsam\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+17 silly cache afterAdd getfilelist@1.0.0
+18 verbose afterAdd C:\Users\adsam\AppData\Roaming\npm-cache\getfilelist\1.0.0\package\package.json not in flight; writing
+19 verbose correctMkdir C:\Users\adsam\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+20 verbose afterAdd C:\Users\adsam\AppData\Roaming\npm-cache\getfilelist\1.0.0\package\package.json written
+21 silly publish { name: 'getfilelist',
+21 silly publish   version: '1.0.0',
+21 silly publish   description: 'This is a Node.js module to retrieve the file list with the folder tree from the specific folder of Google Drive.',
+21 silly publish   main: 'index.js',
+21 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/tanaikech/node-getfilelist.git' },
+21 silly publish   keywords: [ 'google', 'drive', 'filelist', 'foldertree', 'folderstructure' ],
+21 silly publish   author:
+21 silly publish    { name: 'Tanaike Kanshi',
+21 silly publish      email: 'tanaike@hotmail.com',
+21 silly publish      url: 'https://github.com/tanaikech' },
+21 silly publish   license: 'MIT',
+21 silly publish   bugs: { url: 'https://github.com/tanaikech/node-getfilelist/issues' },
+21 silly publish   homepage: 'https://github.com/tanaikech/node-getfilelist#readme',
+21 silly publish   devDependencies: { googleapis: '^35.0.0' },
+21 silly publish   readme: 'node-getfilelist\n=====\n\n[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENCE)\n\n<a name="TOP"></a>\n# Overview\nThis is a Node.js module to retrieve the file list with the folder tree from the specific folder of Google Drive.\n\n# Description\nWhen I create applications for using Google Drive, I often retrieve a file list from a folder in the application. So far, I had created the script for retrieving a file list from a folder for each application. Recently, I thought that if there is the script for retrieving the file list with the folder tree from the folder of Google Drive as a module, it will be useful for me and other users. So I created this.\n\n## Features\n- This module retrieves all files from a folder in Google Drive.\n- All files include the folder structure in Google Drive.\n- Only folder tree can be also retrieved.\n\n\n# Install\n~~~\n$ npm install --save-dev getfilelist\n~~~\n\nor\n\n~~~\n$ npm install --global getfilelist\n~~~\n\n# Method\n| Method | Explanation |\n|:---|:---|\n| GetFolderTree(object) | Retrieve only folder structure from a folder |\n| GetFileList(object) | Retrieve file list with folder structure from a folder |\n\n# Usage\nThere are 3 patterns for using this library.\n\n## 1. Use API key\nThis is a sample script using API key. When you want to retrieve the API key, please do the following flow.\n\n1. Login to Google.\n2. Access to [https://console.cloud.google.com/?hl=en](https://console.cloud.google.com/?hl=en).\n3. Click select project at the right side of "Google Cloud Platform" of upper left of window.\n4. Click "NEW PROJECT"\n    1. Input "Project Name".\n    2. Click "CREATE".\n    3. Open the created project.\n    4. Click "Enable APIs and get credentials like keys".\n    5. Click "Library" at left side.\n    6. Input "Drive API" in "Search for APIs & Services".\n    7. Click "Google Drive API".\n    8. Click "ENABLE".\n    9. Back to [https://console.cloud.google.com/?hl=en](https://console.cloud.google.com/?hl=en).\n    10. Click "Enable APIs and get credentials like keys".\n    11. Click "Credentials" at left side.\n    12. Click "Create credentials" and select API key.\n    13. Copy the API key. You can use this API key.\n\n### Sample script\n~~~javascript\nconst getfilelist = require("getfilelist");\n\nconst resource = {\n    auth: "### API key ###",\n    id: "### Folder ID ###",\n    fields: "files(name,id)",\n};\n\ngetfilelist.GetFileList(resource, function(err, res) { // or getfilelist.GetFolderTree(resource, function(err, res) {\n    if (err) {\n        console.log(err);\n        return;\n    }\n   console.log(res);\n});\n~~~\n\n### Note\n- **When you want to retrieve the file list from the folder using API key, the folder is required to be shared.**\n- You can modify the property of ``fields``. When this is not used, the default fields are used.\n\n## 2. Use OAuth2\nDocument of OAuth2 is [here](https://developers.google.com/identity/protocols/OAuth2).\n\n### Sample script\nIn this sample script, the process of OAuth2 uses [the quickstart of Google](https://developers.google.com/drive/api/v3/quickstart/nodejs). Please check this.\n\n~~~javascript\nconst fs = require(\'fs\');\nconst readline = require(\'readline\');\nconst {google} = require(\'googleapis\');\n\n// If modifying these scopes, delete token.json.\nconst SCOPES = [\'https://www.googleapis.com/auth/drive.metadata.readonly\'];\n// The file token.json stores the user\'s access and refresh tokens, and is\n// created automatically when the authorization flow completes for the first\n// time.\nconst TOKEN_PATH = \'token.json\';\n\n// Load client secrets from a local file.\nfs.readFile(\'credentials.json\', (err, content) => {\n  if (err) return console.log(\'Error loading client secret file:\', err);\n  // Authorize a client with credentials, then call the Google Drive API.\n  authorize(JSON.parse(content), getfilelist);\n});\n\n/**\n * Create an OAuth2 client with the given credentials, and then execute the\n * given callback function.\n * @param {Object} credentials The authorization client credentials.\n * @param {function} callback The callback to call with the authorized client.\n */\nfunction authorize(credentials, callback) {\n  const {client_secret, client_id, redirect_uris} = credentials.installed;\n  const oAuth2Client = new google.auth.OAuth2(\n      client_id, client_secret, redirect_uris[0]);\n\n  // Check if we have previously stored a token.\n  fs.readFile(TOKEN_PATH, (err, token) => {\n    if (err) return getAccessToken(oAuth2Client, callback);\n    oAuth2Client.setCredentials(JSON.parse(token));\n    callback(oAuth2Client);\n  });\n}\n\n/**\n * Get and store new token after prompting for user authorization, and then\n * execute the given callback with the authorized OAuth2 client.\n * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.\n * @param {getEventsCallback} callback The callback for the authorized client.\n */\nfunction getAccessToken(oAuth2Client, callback) {\n  const authUrl = oAuth2Client.generateAuthUrl({\n    access_type: \'offline\',\n    scope: SCOPES,\n  });\n  console.log(\'Authorize this app by visiting this url:\', authUrl);\n  const rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n  });\n  rl.question(\'Enter the code from that page here: \', (code) => {\n    rl.close();\n    oAuth2Client.getToken(code, (err, token) => {\n      if (err) return console.error(\'Error retrieving access token\', err);\n      oAuth2Client.setCredentials(token);\n      // Store the token to disk for later program executions\n      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {\n        if (err) console.error(err);\n        console.log(\'Token stored to\', TOKEN_PATH);\n      });\n      callback(oAuth2Client);\n    });\n  });\n}\n\n/**\n * Using getfilelist.\n */\nfunction getfilelist(auth) {\n    const getfilelist = require(\'getfilelist\');\n\n    const resource = {\n        auth: auth,\n        id: "### Folder ID ###",\n        fields: "files(name,id)",\n    };\n\n    getfilelist.GetFileList(resource, function(err, res) { // or getfilelist.GetFolderTree(resource, function(err, res) {\n        if (err) {\n            console.log(err);\n            return;\n        }\n       console.log(res);\n    });\n}\n~~~\n\n### Note\n- Here, as a sample, the script of the authorization uses the script of [quickstart](https://developers.google.com/drive/api/v3/quickstart/nodejs).\n- You can modify the property of ``fields``. When this is not used, the default fields are used.\n\n\n## 3. Use Service account\nDocument of Service account is [here](https://developers.google.com/identity/protocols/OAuth2ServiceAccount).\n\n### Sample script\n~~~javascript\nconst {google} = require(\'googleapis\');\nconst getfilelist = require(\'getfilelist\');\nconst key = require(\'### json file including public/private key pair ###\');\n\nconst jwtClient = new google.auth.JWT(\n    key.client_email,\n    null,\n    key.private_key,\n    [\'https://www.googleapis.com/auth/drive\'],\n    null\n);\n\nconst resource = {\n    auth: jwtClient,\n    id: "### Folder ID ###",\n    fields: "files(name,id)",\n};\n\ngetfilelist.GetFileList(resource, function(err, res) { // or getfilelist.GetFolderTree(resource, function(err, res) {\n    if (err) {\n        console.log(err);\n        return;\n    }\n   console.log(res);\n});\n~~~\n\n### Note\n- You can modify the property of ``fields``. When this is not used, the default fields are used.\n\n\n# Values\n![](images/downloadFolder_sample.png)\n\nAs a sample, when the values are retrieved from above structure, the results of ``GetFolderTree()`` becomes as follows.\n\n## Values retrieved by GetFolderTree()\n~~~javascript\ngetfilelist.GetFolderTree(resource, function(err, res) {\n    if (err) {\n        console.log(err);\n        return;\n    }\n   console.log(res);\n});\n~~~\n\n~~~json\n{\n  "id": [\n    ["folderIdOfsampleFolder1"],\n    ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2a"],\n    ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b"],\n    ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2a","folderIdOfsampleFolder_2a_3a"],\n    ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3a"],\n    ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3b"],\n    ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3b","folderIdOfsampleFolder_2b_3b_4a"]\n  ],\n  "names": [\n    "sampleFolder1",\n    "sampleFolder_2a",\n    "sampleFolder_2b",\n    "sampleFolder_2a_3a",\n    "sampleFolder_2b_3a",\n    "sampleFolder_2b_3b",\n    "sampleFolder_2b_3b_4a"\n  ],\n  "folders": [\n    "folderIdOfsampleFolder1",\n    "folderIdOfsampleFolder_2a",\n    "folderIdOfsampleFolder_2b",\n    "folderIdOfsampleFolder_2a_3a",\n    "folderIdOfsampleFolder_2b_3a",\n    "folderIdOfsampleFolder_2b_3b",\n    "folderIdOfsampleFolder_2b_3b_4a"\n  ]\n}\n~~~\n\n## Values retrieved by Do()\n~~~javascript\ngetfilelist.GetFileList(resource, function(err, res) {\n    if (err) {\n        console.log(err);\n        return;\n    }\n   console.log(res);\n});\n~~~\n\n~~~json\n{\n  "searchedFolder": {\n    "id": "###",\n    "name": "sampleFolder1",\n    "mimeType": "application/vnd.google-apps.folder",\n    "parents": ["###"],\n    "createdTime": "2000-01-01T01:23:45.000Z",\n    "modifiedTime": "2000-01-01T01:23:45.000Z",\n    "webViewLink": "https://drive.google.com/drive/folders/###",\n    "owners": [{"displayName": "###","permissionId": "###","emailAddress": "###"}],\n    "shared": true\n  },\n  "folderTree": {\n    "id": [\n      ["folderIdOfsampleFolder1"],\n      ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2a"],\n      ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b"],\n      ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2a","folderIdOfsampleFolder_2a_3a"],\n      ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3a"],\n      ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3b"],\n      ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3b","folderIdOfsampleFolder_2b_3b_4a"]\n    ],\n    "names": [\n      "sampleFolder1",\n      "sampleFolder_2a",\n      "sampleFolder_2b",\n      "sampleFolder_2a_3a",\n      "sampleFolder_2b_3a",\n      "sampleFolder_2b_3b",\n      "sampleFolder_2b_3b_4a"\n    ],\n    "folders": [\n      "folderIdOfsampleFolder1",\n      "folderIdOfsampleFolder_2a",\n      "folderIdOfsampleFolder_2b",\n      "folderIdOfsampleFolder_2a_3a",\n      "folderIdOfsampleFolder_2b_3a",\n      "folderIdOfsampleFolder_2b_3b",\n      "folderIdOfsampleFolder_2b_3b_4a"\n    ]\n  },\n  "fileList": [\n    {\n      "folderTree": ["folderIdOfsampleFolder1"],\n      "files": [\n        {\n          "name": "Spreadsheet1",\n          "mimeType": "application/vnd.google-apps.spreadsheet"\n        }\n      ]\n    },\n    {\n      "folderTree": ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2a"],\n      "files": [\n        {\n          "name": "Spreadsheet2",\n          "mimeType": "application/vnd.google-apps.spreadsheet"\n        }\n      ]\n    },\n    {\n      "folderTree": ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b"],\n      "files": [\n        {\n          "name": "Spreadsheet4",\n          "mimeType": "application/vnd.google-apps.spreadsheet"\n        }\n      ]\n    },\n    {\n      "folderTree": ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2a","folderIdOfsampleFolder_2a_3a"],\n      "files": null\n    },\n    {\n      "folderTree": ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3a"],\n      "files": [\n        {\n          "name": "Spreadsheet3",\n          "mimeType": "application/vnd.google-apps.spreadsheet"\n        }\n      ]\n    },\n    {\n      "folderTree": ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3b"],\n      "files": null\n    },\n    {\n      "folderTree": ["folderIdOfsampleFolder1","folderIdOfsampleFolder_2b","folderIdOfsampleFolder_2b_3b","folderIdOfsampleFolder_2b_3b_4a"],\n      "files": [\n        {\n          "name": "Document1",\n          "mimeType": "application/vnd.google-apps.document"\n        },\n        {\n          "name": "image1.png",\n          "mimeType": "image/png"\n        },\n        {\n          "name": "Slides1",\n          "mimeType": "application/vnd.google-apps.presentation"\n        },\n        {\n          "name": "Spreadsheet5",\n          "mimeType": "application/vnd.google-apps.spreadsheet"\n        },\n        {\n          "name": "StandaloneProject1",\n          "mimeType": "application/vnd.google-apps.script"\n        },\n        {\n          "name": "Test1.txt",\n          "mimeType": "text/plain"\n        }\n      ]\n    }\n  ],\n  "totalNumberOfFiles": 10,\n  "totalNumberOfFolders": 7\n}\n~~~\n\n-----\n\n<a name="Licence"></a>\n# Licence\n[MIT](LICENCE)\n\n<a name="Author"></a>\n# Author\n[Tanaike](https://tanaikech.github.io/about/)\n\nIf you have any questions and commissions for me, feel free to tell me.\n\n<a name="Update_History"></a>\n# Update History\n* v1.0.0 (November 14, 2018)\n\n    1. Initial release.\n\n\n[TOP](#TOP)\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: 'c3277a91285574b4bb764d8978c6358147bbcead',
+21 silly publish   _id: 'getfilelist@1.0.0',
+21 silly publish   _shasum: '7e1c5dc7ea97dfb5a56c8380ba902f022da27e0f',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name getfilelist
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'getfilelist',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'getfilelist',
+26 silly mapToRegistry   name: 'getfilelist',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri https://registry.npmjs.org/getfilelist
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading C:\Users\adsam\AppData\Roaming\npm-cache\getfilelist\1.0.0\package.tgz
+30 verbose request uri https://registry.npmjs.org/getfilelist
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 12:09:18
+33 verbose request using bearer token for auth
+34 verbose request id 68394f60bf8b3e15
+35 http request PUT https://registry.npmjs.org/getfilelist
+36 http 403 https://registry.npmjs.org/getfilelist
+37 verbose headers { date: 'Wed, 14 Nov 2018 03:09:18 GMT',
+37 verbose headers   'content-type': 'application/json',
+37 verbose headers   'transfer-encoding': 'chunked',
+37 verbose headers   connection: 'keep-alive',
+37 verbose headers   'set-cookie':
+37 verbose headers    [ '__cfduid=ddeb3e8e63f8e806128de087e56e663871542164958; expires=Thu, 14-Nov-19 03:09:18 GMT; path=/; domain=.registry.npmjs.org; HttpOnly' ],
+37 verbose headers   'cf-ray': '4796474b8f49af23-KIX',
+37 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+37 verbose headers   vary: 'Accept-Encoding',
+37 verbose headers   server: 'cloudflare',
+37 verbose headers   'content-encoding': 'gzip' }
+38 verbose request invalidating C:\Users\adsam\AppData\Roaming\npm-cache\registry.npmjs.org\getfilelist on PUT
+39 error publish Failed PUT 403
+40 verbose stack Error: Package name too similar to existing packages; try renaming your package to '@tanaike/getfilelist' and publishing with 'npm publish --access=public' instead : getfilelist
+40 verbose stack     at makeError (C:\Nodist\npmv\3.10.5\node_modules\npm-registry-client\lib\request.js:264:12)
+40 verbose stack     at CachingRegistryClient.<anonymous> (C:\Nodist\npmv\3.10.5\node_modules\npm-registry-client\lib\request.js:252:14)
+40 verbose stack     at Gunzip.cb (C:\Nodist\npmv\3.10.5\node_modules\npm-registry-client\lib\request.js:178:7)
+40 verbose stack     at Gunzip.zlibBufferOnEnd (zlib.js:113:10)
+40 verbose stack     at Gunzip.emit (events.js:165:20)
+40 verbose stack     at endReadableNT (_stream_readable.js:1101:12)
+40 verbose stack     at process._tickCallback (internal/process/next_tick.js:152:19)
+41 verbose statusCode 403
+42 verbose pkgid getfilelist
+43 verbose cwd D:\gomi\GitHub\node-getfilelist
+44 error Windows_NT 10.0.17134
+45 error argv "C:\\Nodist\\v-x64\\9.4.0\\node.exe" "C:\\Nodist\\npmv\\3.10.5\\bin\\npm-cli.js" "publish"
+46 error node v9.4.0
+47 error npm  v3.10.5
+48 error code E403
+49 error Package name too similar to existing packages; try renaming your package to '@tanaike/getfilelist' and publishing with 'npm publish --access=public' instead : getfilelist
+50 error If you need help, you may report this error at:
+50 error     <https://github.com/npm/npm/issues>
+51 verbose exit [ 1, true ]
