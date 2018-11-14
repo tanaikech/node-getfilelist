@@ -18,14 +18,16 @@ When I create applications for using Google Drive, I often retrieve a file list 
 
 # Install
 ~~~
-$ npm install --save-dev getfilelist
+$ npm install --save-dev google-drive-getfilelist
 ~~~
 
 or
 
 ~~~
-$ npm install --global getfilelist
+$ npm install --global google-drive-getfilelist
 ~~~
+
+You can also see this module at [https://www.npmjs.com/package/google-drive-getfilelist](https://www.npmjs.com/package/google-drive-getfilelist).
 
 # Method
 | Method | Explanation |
