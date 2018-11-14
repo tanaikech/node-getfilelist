@@ -1,0 +1,29 @@
+{
+  "name": "getfilelist",
+  "version": "1.0.0",
+  "description": "This is a Node.js module to retrieve the file list with the folder tree from the specific folder of Google Drive.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanaikech/node-getfilelist.git"
+  },
+  "keywords": [
+    "google",
+    "drive",
+    "filelist",
+    "foldertree",
+    "folderstructure"
+  ],
+  "author": "Tanaike Kanshi <tanaike@hotmail.com> (https://github.com/tanaikech)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tanaikech/node-getfilelist/issues"
+  },
+  "homepage": "https://github.com/tanaikech/node-getfilelist#readme",
+  "devDependencies": {
+    "googleapis": "^35.0.0"
+  }
+}
