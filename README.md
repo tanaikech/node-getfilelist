@@ -419,5 +419,9 @@ If you have any questions and commissions for me, feel free to tell me.
 
     1. Initial release.
 
+* v1.0.3 (November 16, 2018)
+
+    1. Modified a bug.
+
 
 [TOP](#TOP)

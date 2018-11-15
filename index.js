@@ -28,7 +28,7 @@ async function getFilesFromFolder(obj) {
     const folderTree = obj.folderTree;
     const service = e.service;
     let f = {
-        searchedFolder: e.searchFolder,
+        searchedFolder: e.searchedFolder,
         folderTree: folderTree,
         fileList: [],
     };
