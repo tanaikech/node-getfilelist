@@ -8,4 +8,4 @@ node_js:
 install:
   - npm install -g google-drive-getfilelist
 script:
-  - echo "npm test temporarily disabled"
+  - echo "npm test is not used because this module uses an access token."
