@@ -1,5 +1,6 @@
 // node-getfilelist: This is a Node.js module to retrieve the file list with the folder tree from the specific folder of Google Drive.
 const { google } = require("googleapis");
+let driveIdForgetfilelist = "";
 
 async function getList(drive, ptoken, q, fields) {
   const params = {
@@ -11,6 +12,10 @@ async function getList(drive, ptoken, q, fields) {
     includeItemsFromAllDrives: true,
     supportsAllDrives: true,
   };
+  if (driveIdForgetfilelist) {
+    params.driveId = driveIdForgetfilelist;
+    params.corpora = "drive";
+  }
   const res = await drive.files.list(params);
   return res;
 }
@@ -30,7 +35,8 @@ async function getFilesFromFolder(obj) {
   const folderTree = obj.folderTree;
   const service = e.service;
   let f = {
-    searchedFolder: e.searchedFolder,
+    // searchedFolder: e.searchFolder,
+    searchedFolder: e.searchedFolder, // e.searchedFolderにする必要があると思われる。
     folderTree: folderTree,
     fileList: [],
   };
@@ -168,7 +174,7 @@ async function getFileInf(drive, id) {
   const params = {
     fileId: id,
     fields:
-      "createdTime,id,mimeType,modifiedTime,name,owners,parents,shared,webContentLink,webViewLink",
+      "createdTime,id,mimeType,modifiedTime,name,owners,parents,shared,webContentLink,webViewLink,driveId",
     supportsAllDrives: true,
   };
   return await drive.files.get(params);
@@ -188,6 +194,7 @@ function init(e, callback) {
   getFileInf(e.service, e.id)
     .then((r) => {
       e.searchedFolder = r.data;
+      driveIdForgetfilelist = r.data.driveId;
       e.method = (chkAuth || rootId) && !e.searchedFolder.shared;
       callback(null, e);
     })
