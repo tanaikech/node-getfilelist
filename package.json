@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/tanaikech/node-getfilelist#readme",
   "devDependencies": {
-    "googleapis": "^35.0.0"
+    "googleapis": "^59.0.0"
   }
 }
